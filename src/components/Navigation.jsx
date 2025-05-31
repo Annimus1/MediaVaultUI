@@ -22,7 +22,7 @@ export default function Navigation() {
           } action={null} /></li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <a className="btn btn-ghost text-xl">MediaVault</a>
         </div>
         
         <div className="w-full navbar-end hidden lg:flex lg:gap-4">
