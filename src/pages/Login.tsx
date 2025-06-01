@@ -1,8 +1,10 @@
 import axios from 'axios'
 import React from 'react'
+import { Link } from 'react-router';
 import.meta.env
 
 function Login() {
+
   const [error, setError] = React.useState({ status: false, message: "error" });
   const [loading, setLoading] = React.useState(false);
   const [user, setUser] = React.useState("");
@@ -50,7 +52,7 @@ function Login() {
 
           <button disabled={!(user.length>0) || !(password.length>0)} className="btn btn-neutral mt-4 text-lg" onClick={() => { login() }}>Login {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
 
-          <p>Don't have an account yet? <a className="link link-accent">Register</a> here.</p>
+          <p>Don't have an account yet? <Link to="/register" className="link link-accent">Register</Link> here.</p>
         </fieldset>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react'
+import { Link } from 'react-router';
 
 function Register() {
 
@@ -73,7 +74,7 @@ function Register() {
 
           <button onClick={() => register()} className="btn btn-neutral mt-4 text-lg " disabled={passwordError || password.length <= 0 || password2.length <= 0} >Sign  Up {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
 
-          <p>Do you already have an account? <a className="link link-accent">Sign In</a> here.</p>
+          <p>Do you already have an account? <Link to="/login" className="link link-accent">Sign In</Link> here.</p>
         </fieldset>
       </div>
     </div>
