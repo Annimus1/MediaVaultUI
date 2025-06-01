@@ -12,7 +12,7 @@ interface AuthContextType {
     isAuthenticated: boolean;
     login: (token: string) => void;
     updateToken: (token: string) => void;
-    logout: () => void;
+    logout: Function;
 }
 
 export const AuthContext = React.createContext<AuthContextType | null>(null);
