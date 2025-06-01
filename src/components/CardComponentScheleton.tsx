@@ -1,5 +1,3 @@
-import React from 'react'
-
 function CardComponentScheleton() {
   return (
     <div className="flex w-52 flex-col gap-4">

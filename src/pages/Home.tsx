@@ -1,15 +1,15 @@
-import React from 'react'
-import Navigation from '../components/Navigation';
 import Catalog from '../components/Catalog';
+import Navigation from '../components/Navigation';
+import type { ReactNode } from 'react';
 import Pagination from '../components/Pagination';
 
-function Home() {
+function Home():ReactNode {
   return (
     <div className='w-full'>
       <Navigation />
-      <Catalog />
+      <Catalog/>
       <footer className='w-full flex justify-center mb-5'>
-        <Pagination />
+        <Pagination/>
       </footer>
     </div>
   )

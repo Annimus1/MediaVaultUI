@@ -1,6 +1,5 @@
-import React from 'react'
-import CardComponent from './CardComponent'
-import CardComponentScheleton from './CardComponentScheleton'
+import CardComponent from "./CardComponent";
+import CardComponentScheleton from "./CardComponentScheleton";
 
 function Catalog() {
   return (
