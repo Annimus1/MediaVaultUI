@@ -14,11 +14,12 @@ function Register() {
   const register = () => {
     setLoading(!loading);
 
-    axios.post(import.meta.env.VITE_URL + '/auth/register', { user, password, email })
+    axios.post<RegisterResponse>(import.meta.env.VITE_URL + '/auth/register', { user, password, email })
       .then(response => {
         console.log(response)
         if (response.status == 200) {
           const token = response.data.token;
+          console.log(token)
           // save token
           // redirect to main page 
 
@@ -31,13 +32,13 @@ function Register() {
     setLoading(false);
   }
 
-  React.useEffect(()=>{
-    if(password !== password2){
+  React.useEffect(() => {
+    if (password !== password2) {
       setPasswordError(true);
-    }else{
+    } else {
       setPasswordError(false);
     }
-  },[password, password2]);
+  }, [password, password2]);
 
   return (
     <div className='w-[100vw] h-[100vh] flex items-center justify-center bg-center 
@@ -47,36 +48,40 @@ function Register() {
           <legend className="fieldset-legend text-2xl">Register</legend>
 
           <label className="label select-none text-lg" htmlFor='user'>Username</label>
-          <input type="text" id='user' onChange={ e => setUser(e.target.value)} value={user} className="input w-full text-lg focus:outline-0" placeholder="username" />
+          <input type="text" id='user' onChange={e => setUser(e.target.value)} value={user} className="input w-full text-lg focus:outline-0" placeholder="username" />
 
           <br />
 
           <label className="label select-none text-lg" htmlFor='user'>Email</label>
-          <input type="email" id='email' onChange={ e => setEmail(e.target.value)} value={email} className="input w-full text-lg focus:outline-0" placeholder="Email" />
+          <input type="email" id='email' onChange={e => setEmail(e.target.value)} value={email} className="input w-full text-lg focus:outline-0" placeholder="Email" />
 
           <br />
 
           <label className="label select-none text-lg">Password</label>
           <div className={passwordError ? "tooltip tooltip-open tooltip-error" : ""} data-tip={"Password doesn't match"}>
-            <input type="password" onChange={ e => setPassword(e.target.value)} value={password} className="input w-full text-lg focus:outline-0" placeholder="Password" />
+            <input type="password" onChange={e => setPassword(e.target.value)} value={password} className="input w-full text-lg focus:outline-0" placeholder="Password" />
           </div>
 
           <br />
 
           <label className="label select-none text-lg">Confirm Password</label>
           <div className={passwordError ? "tooltip tooltip-open tooltip-error tooltip-bottom" : ""} data-tip={"Password doesn't match"}>
-            <input type="password" onChange={ e => setPassword2(e.target.value)} value={password2} className="input w-full text-lg focus:outline-0" placeholder="Password" />
+            <input type="password" onChange={e => setPassword2(e.target.value)} value={password2} className="input w-full text-lg focus:outline-0" placeholder="Password" />
           </div>
 
           <br />
 
-          <button onClick={() => register()} className="btn btn-neutral mt-4 text-lg " disabled={passwordError || password.length<=0 || password2.length<=0} >Sign  Up {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
+          <button onClick={() => register()} className="btn btn-neutral mt-4 text-lg " disabled={passwordError || password.length <= 0 || password2.length <= 0} >Sign  Up {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
 
           <p>Do you already have an account? <a className="link link-accent">Sign In</a> here.</p>
         </fieldset>
       </div>
     </div>
   )
+}
+
+interface RegisterResponse {
+  token: string;
 }
 
 export default Register;

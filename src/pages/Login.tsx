@@ -11,11 +11,12 @@ function Login() {
   const login = () => {
     setLoading(!loading);
 
-    axios.post(import.meta.env.VITE_URL + '/auth/login', { user, password })
+    axios.post<LoginResponse>(import.meta.env.VITE_URL + '/auth/login', { user, password })
       .then(response => {
         console.log(response)
         if (response.status == 200) {
-          const token = response.data.token;
+          const token: string = response.data.token;
+          console.log(token)
           // save token
           // redirect to main page 
 
@@ -47,13 +48,17 @@ function Login() {
 
           <br />
 
-          <button disabled={!user.length>0 || !password.length>0} className="btn btn-neutral mt-4 text-lg" onClick={() => { login(user, password) }}>Login {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
+          <button disabled={!(user.length>0) || !(password.length>0)} className="btn btn-neutral mt-4 text-lg" onClick={() => { login() }}>Login {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
 
           <p>Don't have an account yet? <a className="link link-accent">Register</a> here.</p>
         </fieldset>
       </div>
     </div>
   )
+}
+
+interface LoginResponse {
+  token: string;
 }
 
 export default Login
