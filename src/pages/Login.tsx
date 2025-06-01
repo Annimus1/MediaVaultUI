@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import { Link } from 'react-router';
+import { AuthContext } from '../auth/AuthContext';
 import.meta.env
 
 function Login() {
@@ -10,18 +11,17 @@ function Login() {
   const [user, setUser] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  const authContect = React.useContext(AuthContext);
+
   const login = () => {
     setLoading(!loading);
 
     axios.post<LoginResponse>(import.meta.env.VITE_URL + '/auth/login', { user, password })
       .then(response => {
-        console.log(response)
         if (response.status == 200) {
           const token: string = response.data.token;
-          console.log(token)
-          // save token
-          // redirect to main page 
-
+          setError({ status: false, message: "" });
+          authContect?.login(token);
         }
       })
       .catch(error => {
