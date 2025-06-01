@@ -1,36 +1,80 @@
+import axios from 'axios';
 import React from 'react'
 
 function Register() {
+
+  const [passwordError, setPasswordError] = React.useState(false);
+  const [error, setError] = React.useState({ status: false, message: "error" });
+  const [loading, setLoading] = React.useState(false);
+  const [user, setUser] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [password2, setPassword2] = React.useState("");
+
+  const register = () => {
+    setLoading(!loading);
+
+    axios.post(import.meta.env.VITE_URL + '/auth/register', { user, password, email })
+      .then(response => {
+        console.log(response)
+        if (response.status == 200) {
+          const token = response.data.token;
+          // save token
+          // redirect to main page 
+
+        }
+      })
+      .catch(error => {
+        setError({ status: true, message: error.response.data.message || "Something went wrong!" })
+      });
+
+    setLoading(false);
+  }
+
+  React.useEffect(()=>{
+    if(password !== password2){
+      setPasswordError(true);
+    }else{
+      setPasswordError(false);
+    }
+  },[password, password2]);
+
   return (
-    <div className='w-full h-[100vh] flex items-center justify-center'>
+    <div className='w-[100vw] h-[100vh] flex items-center justify-center bg-center 
+    bg-[url("https://images.unsplash.com/photo-1629180774299-b0d0adc288e7?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")]'>
+      <div className={error.status ? "tooltip tooltip-open tooltip-error" : ""} data-tip={error.message}>
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4 m-4 ">
+          <legend className="fieldset-legend text-2xl">Register</legend>
 
-      <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4 m-4 ">
-        <legend className="fieldset-legend text-2xl">Register</legend>
+          <label className="label select-none text-lg" htmlFor='user'>Username</label>
+          <input type="text" id='user' onChange={ e => setUser(e.target.value)} value={user} className="input w-full text-lg focus:outline-0" placeholder="username" />
 
-        <label className="label select-none text-lg" htmlFor='user'>Username</label>
-        <input type="text" id='user' className="input w-full text-lg focus:outline-0" placeholder="username" />
+          <br />
 
-        <br />
+          <label className="label select-none text-lg" htmlFor='user'>Email</label>
+          <input type="email" id='email' onChange={ e => setEmail(e.target.value)} value={email} className="input w-full text-lg focus:outline-0" placeholder="Email" />
 
-        <label className="label select-none text-lg" htmlFor='user'>Email</label>
-        <input type="email" id='email' className="input w-full text-lg focus:outline-0" placeholder="Email" />
+          <br />
 
-        <br />
+          <label className="label select-none text-lg">Password</label>
+          <div className={passwordError ? "tooltip tooltip-open tooltip-error" : ""} data-tip={"Password doesn't match"}>
+            <input type="password" onChange={ e => setPassword(e.target.value)} value={password} className="input w-full text-lg focus:outline-0" placeholder="Password" />
+          </div>
 
-        <label className="label select-none text-lg">Password</label>
-        <input type="password" className="input w-full text-lg focus:outline-0" placeholder="Password" />
+          <br />
 
-        <br />
+          <label className="label select-none text-lg">Confirm Password</label>
+          <div className={passwordError ? "tooltip tooltip-open tooltip-error tooltip-bottom" : ""} data-tip={"Password doesn't match"}>
+            <input type="password" onChange={ e => setPassword2(e.target.value)} value={password2} className="input w-full text-lg focus:outline-0" placeholder="Password" />
+          </div>
 
-        <label className="label select-none text-lg">Confirm Password</label>
-        <input type="password" className="input w-full text-lg focus:outline-0" placeholder="Password" />
+          <br />
 
-        <br />
+          <button onClick={() => register()} className="btn btn-neutral mt-4 text-lg " disabled={passwordError || password.length<=0 || password2.length<=0} >Sign  Up {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
 
-        <button className="btn btn-neutral mt-4 text-lg">Sign  Up</button>
-
-        <p>Do you already have an account? <a className="link link-accent">Sign In</a> here.</p>
-      </fieldset>
+          <p>Do you already have an account? <a className="link link-accent">Sign In</a> here.</p>
+        </fieldset>
+      </div>
     </div>
   )
 }
