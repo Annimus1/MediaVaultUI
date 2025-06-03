@@ -1,6 +1,6 @@
 // src/components/RootLayout.tsx (crea este nuevo archivo)
 import React from 'react';
-import { AuthProvider } from '../auth/AuthContext';
+import { AuthProvider } from '../context/AuthContext';
 import { Outlet } from 'react-router';
 
 const RootLayout: React.FC = () => {

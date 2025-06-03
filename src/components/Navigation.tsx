@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from '../auth/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import BtnCustom from './BtnCustom'
 
 export default function Navigation() {
