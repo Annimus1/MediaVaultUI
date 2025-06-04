@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import BtnCustom from './BtnCustom'
+import { Link } from 'react-router';
 
 export default function Navigation() {
   const authContext = useContext(AuthContext);
@@ -22,7 +23,7 @@ export default function Navigation() {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">MediaVault</a>
+        <Link to={'/'} className="btn btn-ghost text-xl p-2"><span><img className="h-8" src="/public/treasure.png" alt="" /></span>MediaVault</Link>
       </div>
 
       <div className="w-full navbar-end hidden lg:flex lg:gap-4">
