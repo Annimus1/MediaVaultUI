@@ -22,7 +22,7 @@ function Catalog() {
   const mediaContext = useContext(MediaContext);
   const authContext = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>("hola");
+  const [error, setError] = useState<string | null>(null);
   const { media } = mediaContext || { media: [] };
 
   useEffect(() => {
@@ -36,9 +36,7 @@ function Catalog() {
       }
     })
       .then(response => {
-        console.log('fetch data:', response.data);
-        console.log('context', mediaContext?.media);
-        // mediaContext?.updateMedia(response.data.data);
+        mediaContext?.updateMedia(response.data.data);
         setIsLoading(false);
       })
       .catch(error => {
