@@ -108,7 +108,7 @@ function Catalog() {
       }
 
       { // add media button
-        !media && !error && !isLoading &&
+        media && !error && !isLoading &&
         <div className="w-96 flex flex-col items-center justify-center gap-4 p-4">
           <div className="flex flex-col items-center justify-center gap-2 p-4">
             <AddMediaBtn />

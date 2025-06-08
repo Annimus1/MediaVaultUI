@@ -3,7 +3,7 @@ import { Link } from "react-router";
 export default function AddMediaBtn() {
   return (
     <Link
-      to={"/404"}
+      to={"/add"}
       role="button"
       className="p-4 bg-accent rounded-full hover:scale-110 transition-all duration-300" title="Add Media"
     >
