@@ -2,12 +2,14 @@ import React from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { DayPicker } from "react-day-picker";
 
 export default function AddMediaForm() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState({ error: false, message: "" });
   const [name, setName] = React.useState<string>("");
-  const [completedDate, setCompletedDate] = React.useState<string>("");
+  const [completedDate, setCompletedDate] = React.useState<Date | undefined>(undefined);
+  const [ showDatePicker, setShowDatePicker ] = React.useState<boolean>(false);
   const [score, setScore] = React.useState<number>(0);
   const [poster, setPoster] = React.useState<string>("");
   const [mediaType, setMediaType] = React.useState<string>("movie");
@@ -19,18 +21,6 @@ export default function AddMediaForm() {
 
   const postData = (e: React.MouseEvent) => {
     e.preventDefault();
-
-    const data = {
-      name: name,
-      completedDate: completedDate,
-      score: score,
-      poster: poster,
-      mediaType: mediaType,
-      language: language,
-      comment: comment
-    }
-
-    console.log(data)
 
     if (!name || !completedDate || !score || !poster || !mediaType || !language) {
       setError({ error: true, message: "Please fill in all required fields." });
@@ -45,7 +35,16 @@ export default function AddMediaForm() {
       setComment(null);
     }
 
-    console.log(data);
+    const data = {
+      name: name,
+      completedDate: `${completedDate?.getFullYear()}-${(completedDate?.getMonth() ?? 0) + 1}-${completedDate?.getDate()}`,
+      score: score,
+      poster: poster,
+      mediaType: mediaType,
+      language: language,
+      comment: comment
+    }
+
     axios.post(import.meta.env.VITE_URL + '/addMedia', data, {
       headers: {
         'Authorization': `Bearer ${authContext?.token}`,
@@ -66,7 +65,6 @@ export default function AddMediaForm() {
           setError({ error: false, message: "" });
         }, 3000);
       });
-
   }
 
   const evaluatePoster = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,9 +92,6 @@ export default function AddMediaForm() {
     setScore(value);
   }
 
-  // TODO
-  // add date picker for completed date
-
   return (
     <div className={`${error.error ? "tooltip tooltip-open tooltip-error" : null}`} data-tip={error.message}>
 
@@ -107,7 +102,23 @@ export default function AddMediaForm() {
         <input id="name" required type="text" onChange={e => (setName(e.target.value))} className="input text-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl" placeholder="Title of the media" />
 
         <label htmlFor="completedDate" className="label text-xl">Completed Date</label>
-        <input id="completedDate" required type="text" onChange={e => (setCompletedDate(e.target.value))} className="input text-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl" placeholder="Completed Date" />
+        <p className="label">This is the date you completed the media</p>
+        <input
+          id="completedDate"
+          type="text"
+          onFocus={() => setShowDatePicker(true)}
+          readOnly
+          value={completedDate ? completedDate.toLocaleDateString() : ""}
+          className="input text-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl cursor-pointer"
+          placeholder="Select date"
+          
+        />
+        <div className={`relative ${showDatePicker ? "mb-4" : "hidden"}`}>
+          <DayPicker required className="react-day-picker" mode="single" selected={completedDate} onSelect={(e) => {
+            setCompletedDate(e)
+            setShowDatePicker(false);
+            } } />
+        </div>
 
         <label htmlFor="score" className="label text-xl">Score</label>
         <input
@@ -176,7 +187,7 @@ export default function AddMediaForm() {
           <button
             onClick={() => {
               setName("");
-              setCompletedDate("");
+              setCompletedDate(undefined);
               setScore(0);
               setPoster("");
               setMediaType("");
