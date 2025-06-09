@@ -78,8 +78,8 @@ function Catalog() {
         media && !isLoading && !error &&
         media.map((item: Media) => (
           <CardComponent
-            key={item.id}
-            id={item.id}
+            key={item._id}
+            _id={item._id}
             owner={item.owner}
             name={item.name}
             completedDate={item.completedDate}

@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface Media {
-    id: string;
+    _id: string;
     owner: string;
     name: string;
     completedDate: string;
