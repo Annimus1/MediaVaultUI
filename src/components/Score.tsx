@@ -22,17 +22,17 @@ export default function Score({ id, score }: { id: string; score: number }): JSX
 
   return (
     <div className="rating rating-lg rating-half" title={`Score: ${fixedScore}`}>
-      <input type="radio" name={`rating-${id}`} className="rating-hidden" />
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="0.5 star" checked={mightBeChecked(0.5)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="1 star"   checked={mightBeChecked(1)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="1.5 star" checked={mightBeChecked(1.5)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="2 star"   checked={mightBeChecked(2)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="2.5 star" checked={mightBeChecked(2.5)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="3 star"   checked={mightBeChecked(3)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="3.5 star" checked={mightBeChecked(3.5)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="4 star"   checked={mightBeChecked(4)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="4.5 star" checked={mightBeChecked(4.5)}/>
-      <input type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="5 star"   checked={mightBeChecked(5)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="rating-hidden" />
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="0.5 star" checked={mightBeChecked(0.5)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="1 star"   checked={mightBeChecked(1)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="1.5 star" checked={mightBeChecked(1.5)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="2 star"   checked={mightBeChecked(2)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="2.5 star" checked={mightBeChecked(2.5)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="3 star"   checked={mightBeChecked(3)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="3.5 star" checked={mightBeChecked(3.5)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="4 star"   checked={mightBeChecked(4)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-1 bg-green-500" aria-label="4.5 star" checked={mightBeChecked(4.5)}/>
+      <input disabled type="radio" name={`rating-${id}`} className="mask mask-star-2 mask-half-2 bg-green-500" aria-label="5 star"   checked={mightBeChecked(5)}/>
     </div>
   );
 }
