@@ -30,8 +30,8 @@ export const MediaContext = React.createContext<MediaContextType | null>(null);
 
 export const MediaProvider: React.FC<MediaContextProps> = ({ children }) => {
     const [media, setMedia] = React.useState<Media[]>([]);
-    const [currentAmount, setCurrentAmount] = React.useState<number>(0);
-    const [totalAmount, setTotalAmount] = React.useState<number>(0);
+    const [currentAmount, setCurrentAmount] = React.useState<number>(1);
+    const [totalAmount, setTotalAmount] = React.useState<number>(1);
 
     const updateMedia = (newMedia: Media[]) => {
         setMedia(newMedia)

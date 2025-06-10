@@ -29,7 +29,7 @@ function Catalog() {
     document.title = 'Media Vault - Home';
     setIsLoading(true);
 
-    axios.get<fetchTypes>(import.meta.env.VITE_URL + '/', {
+    axios.get<fetchTypes>(import.meta.env.VITE_URL + '/?page=' + mediaContext?.currentAmount, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authContext?.token}`
@@ -37,6 +37,15 @@ function Catalog() {
     })
       .then(response => {
         mediaContext?.updateMedia(response.data.data);
+        // update pagination context
+        // update total pages
+        if(response.data.page.totalPages != mediaContext?.totalAmount) {
+          mediaContext?.setTotalAmount(response.data.page.totalPages);
+        }
+        // update current page
+        if (response.data.page.currentPage != mediaContext?.currentAmount) {
+          mediaContext?.setTotalAmount(response.data.page.totalPages);
+        }
         setIsLoading(false);
       })
       .catch(error => {
@@ -63,7 +72,7 @@ function Catalog() {
           setIsLoading(false);
         }
       });
-  }, []);
+  }, [mediaContext?.currentAmount]);
 
   return (
     <div className='max-w-full md:p-2 lg:p-4 xl:p-8 grid grid-cols-1 md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4 xl:gap-6'>
@@ -120,7 +129,7 @@ function Catalog() {
       { // display error message
         error && !isLoading &&
         <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 flex flex-col items-center justify-center gap-4 p-4">
-          <img  className="w-96 rounded-2xl" src={ errorImage } alt="Error Image" />
+          <img className="w-96 rounded-2xl" src={errorImage} alt="Error Image" />
           <div className="flex flex-col items-center justify-center gap-2">
             <p className="text-4xl text-red-500">Error fetching data.</p>
             <p className="text-center text-xl text-gray-300">{error}</p>
