@@ -3,12 +3,14 @@ import Navigation from '../components/Navigation';
 import type { ReactNode } from 'react';
 import Pagination from '../components/Pagination';
 import { MediaProvider } from '../context/MediaContext';
+import Filters from '../components/Filters';
 
 function Home(): ReactNode {
   return (
     <MediaProvider>
       <div className='max-w-dvw flex flex-col items-center justify-center gap-4 overflow-x-hidden'>
         <Navigation />
+        <Filters />
         <div className='min-h-[48rem]'>
           <Catalog />
         </div>

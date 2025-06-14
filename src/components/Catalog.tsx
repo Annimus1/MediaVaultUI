@@ -26,10 +26,19 @@ function Catalog() {
   const { media } = mediaContext || { media: [] };
 
   useEffect(() => {
+    /**
+     * Fetches media data from the backend API whenever the current page or query string changes.
+     * Updates the media context with the new data and handles pagination state.
+     * Handles errors such as unauthorized access or server errors, and updates the error state accordingly.
+     *
+     * Triggers on changes to:
+     * - mediaContext?.currentAmount: The current page for pagination.
+     * - mediaContext?.queryString: The query string for filtering/searching media.
+     */
     document.title = 'Media Vault - Home';
     setIsLoading(true);
 
-    axios.get<fetchTypes>(import.meta.env.VITE_URL + '/?page=' + mediaContext?.currentAmount, {
+    axios.get<fetchTypes>(import.meta.env.VITE_URL + '/?page=' + mediaContext?.currentAmount + mediaContext?.queryString, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authContext?.token}`
@@ -72,7 +81,7 @@ function Catalog() {
           setIsLoading(false);
         }
       });
-  }, [mediaContext?.currentAmount]);
+  }, [mediaContext?.currentAmount, mediaContext?.queryString]);
 
   return (
     <div className='max-w-full md:p-2 lg:p-4 xl:p-8 grid grid-cols-1 md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4 xl:gap-6'>
