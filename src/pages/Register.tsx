@@ -47,7 +47,7 @@ function Register() {
       
       <div className='w-full h-dvh bg-black/20 fixed'></div>
       
-      <div className={error.status ? "tooltip tooltip-open tooltip-error" : ""} data-tip={error.message}>
+      <div className={`${error.status ? "tooltip tooltip-open tooltip-error" : ""} z-10`} data-tip={error.message}>
         <fieldset className="w-xs fieldset bg-base-200 border-base-300 rounded-box border p-4 md:w-lg lg:w-xl xl:w-[38rem]">
           <legend className="fieldset-legend text-2xl">Register</legend>
 
@@ -77,7 +77,7 @@ function Register() {
 
           <button onClick={() => register()} className="btn btn-neutral mt-4 text-lg z-10" disabled={passwordError || password.length <= 0 || password2.length <= 0} >Sign  Up {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
 
-          <p>Do you already have an account? <Link to="/login" className="link link-accent">Sign In</Link> here.</p>
+          <p>Do you already have an account? <Link to="/login" className="link link-accent z-20">Sign In</Link> here.</p>
         </fieldset>
       </div>
     </div>
