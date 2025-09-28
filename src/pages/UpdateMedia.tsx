@@ -63,7 +63,7 @@ export default function UpdateMedia() {
         { display && 
 
         <AddMediaForm name={Props.name} comment={Props.comment} poster={Props.poster} _id={id} 
-        completedDate={Props.completedDate} score={Props.score} mediaType={Props.mediaType} language={Props.language}/>
+        completedDate={new Date(Props.completedDate)} score={Props.score} mediaType={Props.mediaType} language={Props.language}/>
         }
       </div>
     </div>

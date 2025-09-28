@@ -6,7 +6,7 @@ import { DayPicker } from "react-day-picker";
 
 interface propsType {
     comment:string,
-    completedDate:string,
+    completedDate: Date | undefined,
     language:string,
     mediaType:string
     name:string,
@@ -19,7 +19,7 @@ export default function AddMediaForm(props:propsType) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState({ error: false, message: "" });
   const [name, setName] = React.useState<string>(props.name);
-  const [completedDate, setCompletedDate] = React.useState<Date | undefined>(new Date(props.completedDate));
+  const [completedDate, setCompletedDate] = React.useState<Date | undefined>(props.completedDate);
   const [ showDatePicker, setShowDatePicker ] = React.useState<boolean>(false);
   const [score, setScore] = React.useState<number>(props.score);
   const [poster, setPoster] = React.useState<string>(props.poster);
@@ -64,7 +64,6 @@ export default function AddMediaForm(props:propsType) {
       }
     })
       .then(response => {
-        console.log(response.status);
         if (response.status === 201) {
           setIsLoading(false);
           navigate("/");
@@ -110,7 +109,6 @@ export default function AddMediaForm(props:propsType) {
       }
     })
       .then(response => {
-        console.log(response.status);
         if (response.status === 200) {
           setIsLoading(false);
           navigate("/");
@@ -212,11 +210,11 @@ export default function AddMediaForm(props:propsType) {
           required
           onChange={e => (setMediaType(e.target.value))}
           className="select select-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl">
-          <option value={'movie'} selected={mediaType.toLowerCase() == 'movie' || mediaType == ""}>Movie</option>
-          <option value={'serie'} selected={mediaType.toLowerCase() == 'serie'}>Serie</option>
-          <option value={'anime'} selected={mediaType.toLowerCase() == 'anime'}>Anime</option>
-          <option value={'videogame'} selected={mediaType.toLowerCase() == 'videogame'}>Video Game</option>
-          <option value={'book'} selected={mediaType.toLowerCase() == 'book'}>Book</option>
+          <option value={'movie'} selected={mediaType?.toLowerCase() == 'movie' || mediaType == ""}>Movie</option>
+          <option value={'serie'} selected={mediaType?.toLowerCase() == 'serie'}>Serie</option>
+          <option value={'anime'} selected={mediaType?.toLowerCase() == 'anime'}>Anime</option>
+          <option value={'videogame'} selected={mediaType?.toLowerCase() == 'videogame'}>Video Game</option>
+          <option value={'book'} selected={mediaType?.toLowerCase() == 'book'}>Book</option>
         </select>
 
         <label htmlFor="language" className="label text-xl">Language</label>
@@ -226,9 +224,9 @@ export default function AddMediaForm(props:propsType) {
           onChange={e => (setLanguage(e.target.value))}
           className="select select-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl"
         >
-          <option value={'spanish'} selected={language.toLowerCase() == 'spanish' || language==""}>Spanish</option>
-          <option value={'english'} selected={language.toLowerCase() == 'english'}>English</option>
-          <option value={'sub-spanish'} selected={language.toLowerCase() == 'sub-spanish'}>Sub-spanish</option>
+          <option value={'spanish'} selected={language?.toLowerCase() == 'spanish' || language==""}>Spanish</option>
+          <option value={'english'} selected={language?.toLowerCase() == 'english'}>English</option>
+          <option value={'sub-spanish'} selected={language?.toLowerCase() == 'sub-spanish'}>Sub-spanish</option>
         </select>
 
         <fieldset className="fieldset">
