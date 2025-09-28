@@ -6,6 +6,7 @@ import RootLayout from "./RootLayout";
 import ProtectedRoute from "./ProtectedRoutes";
 import PageNotFound from "../pages/404";
 import AddMedia from "../pages/AddMedia";
+import UpdateMedia from "../pages/UpdateMedia";
 
 const routes = createBrowserRouter([{
   path: "/",
@@ -15,7 +16,8 @@ const routes = createBrowserRouter([{
           {path: "/", index:true, element: <ProtectedRoute><Home/></ProtectedRoute>},
           {path: "/add", element: <ProtectedRoute><AddMedia/></ProtectedRoute>},
           {path: "/login", element: <Login />},
-          {path: "/register", element: <Register />}
+          {path: "/register", element: <Register />},
+          {path: "/:id/update", element: <UpdateMedia />}
         ]
       }
     ]);

@@ -4,17 +4,28 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { DayPicker } from "react-day-picker";
 
-export default function AddMediaForm() {
+interface propsType {
+    comment:string,
+    completedDate:string,
+    language:string,
+    mediaType:string
+    name:string,
+    poster: string,
+    score: number,
+    _id: string | undefined
+  }
+
+export default function AddMediaForm(props:propsType) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState({ error: false, message: "" });
-  const [name, setName] = React.useState<string>("");
-  const [completedDate, setCompletedDate] = React.useState<Date | undefined>(undefined);
+  const [name, setName] = React.useState<string>(props.name);
+  const [completedDate, setCompletedDate] = React.useState<Date | undefined>(new Date(props.completedDate));
   const [ showDatePicker, setShowDatePicker ] = React.useState<boolean>(false);
-  const [score, setScore] = React.useState<number>(0);
-  const [poster, setPoster] = React.useState<string>("");
-  const [mediaType, setMediaType] = React.useState<string>("movie");
-  const [language, setLanguage] = React.useState<string>("Spanish");
-  const [comment, setComment] = React.useState<string | null>("");
+  const [score, setScore] = React.useState<number>(props.score);
+  const [poster, setPoster] = React.useState<string>(props.poster);
+  const [mediaType, setMediaType] = React.useState<string>(props.mediaType);
+  const [language, setLanguage] = React.useState<string>(props.language);
+  const [comment, setComment] = React.useState<string | null>(props.comment);
 
   const authContext = React.useContext(AuthContext);
   const navigate = useNavigate();
@@ -22,18 +33,19 @@ export default function AddMediaForm() {
   const postData = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    if (!name || !completedDate || !score || !poster || !mediaType || !language) {
-      setError({ error: true, message: "Please fill in all required fields." });
-      setTimeout(() => {
-        setError({ error: false, message: "" });
-      }, 3000);
-      return;
-    }
-
-    setIsLoading(true);
-    if (!comment) {
-      setComment(null);
-    }
+    if(!props._id){ 
+      if (!name || !completedDate || !score || !poster || !mediaType || !language) {
+        setError({ error: true, message: "Please fill in all required fields." });
+        setTimeout(() => {
+          setError({ error: false, message: "" });
+        }, 3000);
+        return;
+      }
+      
+      setIsLoading(true);
+      if (!comment) {
+        setComment(null);
+      }
 
     const data = {
       name: name,
@@ -65,6 +77,53 @@ export default function AddMediaForm() {
           setError({ error: false, message: "" });
         }, 3000);
       });
+    }
+
+    else{
+      if (!name || !completedDate || !score || !poster || !mediaType || !language) {
+        setError({ error: true, message: "Please fill in all required fields." });
+        setTimeout(() => {
+          setError({ error: false, message: "" });
+        }, 3000);
+        return;
+      }
+      
+      setIsLoading(true);
+      if (!comment) {
+        setComment(null);
+      }
+
+    const data = {
+      name: name,
+      completedDate: `${completedDate?.getFullYear()}-${(completedDate?.getMonth() ?? 0) + 1}-${completedDate?.getDate()}`,
+      score: score,
+      poster: poster,
+      mediaType: mediaType,
+      language: language,
+      comment: comment
+    }
+
+    axios.put(import.meta.env.VITE_URL + `/${props._id}`, data, {
+      headers: {
+        'Authorization': `Bearer ${authContext?.token}`,
+        'Content-Type': "application/json"
+      }
+    })
+      .then(response => {
+        console.log(response.status);
+        if (response.status === 200) {
+          setIsLoading(false);
+          navigate("/");
+        }
+      })
+      .catch(_error => {
+        setIsLoading(false);
+        setError({ error: true, message: "An error occurred updating the media." });
+        setTimeout(() => {
+          setError({ error: false, message: "" });
+        }, 3000);
+      });
+    }
   }
 
   const evaluatePoster = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +158,7 @@ export default function AddMediaForm() {
         <legend className="fieldset-legend text-3xl">Add new Media</legend>
 
         <label htmlFor='name' className="label text-xl ">Name</label>
-        <input id="name" required type="text" onChange={e => (setName(e.target.value))} className="input text-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl" placeholder="Title of the media" />
+        <input id="name" required type="text" value={name} onChange={e => (setName(e.target.value))} className="input text-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl" placeholder="Title of the media" />
 
         <label htmlFor="completedDate" className="label text-xl">Completed Date</label>
         <p className="label">This is the date you completed the media</p>
@@ -124,6 +183,7 @@ export default function AddMediaForm() {
         <input
           id="score"
           required
+          value={score}
           type="number"
           min={0}
           max={10}
@@ -137,6 +197,7 @@ export default function AddMediaForm() {
         <input
           id="poster"
           required
+          value={poster}
           type="text"
           pattern="https?://.+"
           title="Please enter a valid URL starting with http:// or https://"
@@ -148,33 +209,35 @@ export default function AddMediaForm() {
         <label htmlFor={'mediaType'} className="label text-xl ">Media Type</label>
         <select
           id="mediaType"
-          defaultValue="Movie"
           required
           onChange={e => (setMediaType(e.target.value))}
           className="select select-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl">
-          <option value={'movie'}>Movie</option>
-          <option value={'serie'}>Serie</option>
-          <option value={'anime'}>Anime</option>
-          <option value={'videogame'}>Video Game</option>
-          <option value={'book'}>Book</option>
+          <option value={'movie'} selected={mediaType.toLowerCase() == 'movie' || mediaType == ""}>Movie</option>
+          <option value={'serie'} selected={mediaType.toLowerCase() == 'serie'}>Serie</option>
+          <option value={'anime'} selected={mediaType.toLowerCase() == 'anime'}>Anime</option>
+          <option value={'videogame'} selected={mediaType.toLowerCase() == 'videogame'}>Video Game</option>
+          <option value={'book'} selected={mediaType.toLowerCase() == 'book'}>Book</option>
         </select>
 
         <label htmlFor="language" className="label text-xl">Language</label>
         <select
           id="language"
-          defaultValue="Spanish"
           required
           onChange={e => (setLanguage(e.target.value))}
           className="select select-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl"
         >
-          <option value={'spanish'}>Spanish</option>
-          <option value={'english'}>English</option>
-          <option value={'sub-spanish'}>Sub-spanish</option>
+          <option value={'spanish'} selected={language.toLowerCase() == 'spanish' || language==""}>Spanish</option>
+          <option value={'english'} selected={language.toLowerCase() == 'english'}>English</option>
+          <option value={'sub-spanish'} selected={language.toLowerCase() == 'sub-spanish'}>Sub-spanish</option>
         </select>
 
         <fieldset className="fieldset">
           <label htmlFor="comment" className="label text-xl">Comment</label>
-          <textarea id="comment" onChange={e => (setComment(e.target.value))} className="textarea h-24 md:w-md lg:w-lg xl:w-xl outline-0 focus:outline-0" placeholder="comment"></textarea>
+          <textarea id="comment" 
+          value={comment || ""}
+          onChange={e => (setComment(e.target.value))} 
+          className="textarea h-24 md:w-md lg:w-lg xl:w-xl outline-0 focus:outline-0" 
+          placeholder="comment"></textarea>
           <div className="label">Optional</div>
         </fieldset>
 
