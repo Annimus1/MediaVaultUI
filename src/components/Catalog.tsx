@@ -110,7 +110,7 @@ function Catalog() {
         ))
       }
 
-      { // dysplay no media available message
+      { // display no media available message
         media.length === 0 && !isLoading && !error &&
         <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 flex flex-col items-center justify-center gap-4 p-4">
           <img src="https://cdn5.ludwig.guru/uploads/Group_46fb15b4ff.svg" alt="image" />
@@ -126,7 +126,7 @@ function Catalog() {
       }
 
       { // add media button
-        media && !error && !isLoading &&
+        (media.length>0) && !error && !isLoading &&
         <div className="w-96 flex flex-col items-center justify-center gap-4 p-4">
           <div className="flex flex-col items-center justify-center gap-2 p-4">
             <AddMediaBtn />
