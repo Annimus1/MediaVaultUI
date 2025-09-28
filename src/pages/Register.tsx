@@ -16,21 +16,21 @@ function Register() {
   const authContext = React.useContext(AuthContext);
 
   const register = () => {
-    setLoading(!loading);
+    setLoading(true);
 
     axios.post<RegisterResponse>(import.meta.env.VITE_URL + '/auth/register', { user, password, email })
       .then(response => {
-        if (response.status == 200) {
+        if (response.status == 201) {
           const token = response.data.token;
           setError({ status: false, message: "" });
           authContext?.login(token);
         }
+        setLoading(false);
       })
       .catch(error => {
         setError({ status: true, message: error.response.data.message || "Something went wrong!" })
+        setLoading(false);
       });
-
-    setLoading(false);
   }
 
   React.useEffect(() => {
@@ -44,9 +44,9 @@ function Register() {
   return (
     <div className='w-[100vw] h-[100vh] flex items-center justify-center bg-center 
     bg-[url("https://images.unsplash.com/photo-1629180774299-b0d0adc288e7?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")]'>
-      
+
       <div className='w-full h-dvh bg-black/20 fixed'></div>
-      
+
       <div className={`${error.status ? "tooltip tooltip-open tooltip-error" : ""} z-10`} data-tip={error.message}>
         <fieldset className="w-xs fieldset bg-base-200 border-base-300 rounded-box border p-4 md:w-lg lg:w-xl xl:w-[38rem]">
           <legend className="fieldset-legend text-2xl">Register</legend>
@@ -75,7 +75,13 @@ function Register() {
 
           <br />
 
-          <button onClick={() => register()} className="btn btn-neutral mt-4 text-lg z-10" disabled={passwordError || password.length <= 0 || password2.length <= 0} >Sign  Up {loading ? <span className="loading loading-dots loading-md"></span> : ""}</button>
+          <button
+            onClick={() => register()}
+            className="btn btn-neutral mt-4 text-lg z-10"
+            disabled={loading || passwordError || password.length <= 0 || password2.length <= 0}
+          >
+            Sign  Up {loading ? <span className="loading loading-dots loading-md"></span> : ""}
+          </button>
 
           <p>Do you already have an account? <Link to="/login" className="link link-accent z-20">Sign In</Link> here.</p>
         </fieldset>
