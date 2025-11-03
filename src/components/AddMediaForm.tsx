@@ -185,7 +185,6 @@ export default function AddMediaForm(props:propsType) {
           type="number"
           min={0}
           max={10}
-          step={0.1}
           onChange={e => (evaluateScore(e))}
           className="input text-md outline-0 focus:outline-0 md:w-md lg:w-lg xl:w-xl"
           placeholder="Score (0-10)"
