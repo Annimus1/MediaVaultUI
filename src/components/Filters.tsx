@@ -29,8 +29,8 @@ export default function Filters() {
   const handleSearch = () => {
     let text: string = ''
     score && (text += `&score=${score * 2}`);
-    fromDate && (text += `&fromDate=${fromDate}`);
-    toDate && (text += `&toDate=${toDate}`);
+    fromDate && (text += `&from=${fromDate}`);
+    toDate && (text += `&to=${toDate}`);
     mediaType && (text += `&mediaType=${mediaType}`);
     language && (text += `&language=${language}`);
     mediaContext?.setQueryString(text);
