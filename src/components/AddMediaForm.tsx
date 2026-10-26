@@ -69,7 +69,7 @@ export default function AddMediaForm(props:propsType) {
           navigate("/");
         }
       })
-      .catch(_error => {
+      .catch(() => {
         setIsLoading(false);
         setError({ error: true, message: "An error occurred while adding media." });
         setTimeout(() => {
@@ -114,7 +114,7 @@ export default function AddMediaForm(props:propsType) {
           navigate("/");
         }
       })
-      .catch(_error => {
+      .catch(() => {
         setIsLoading(false);
         setError({ error: true, message: "An error occurred updating the media." });
         setTimeout(() => {

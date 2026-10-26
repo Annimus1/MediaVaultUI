@@ -12,7 +12,7 @@ MediaVaultUI is the React 19 + TypeScript + Vite frontend for a separate MediaVa
 
 ## Known lint state
 
-`npm run lint` is **not green** on `main` (15 errors across `AddMediaForm`, `BtnCustom`, `Catalog`, `Filters`, `Pagination`, `AuthContext`, `Login`; warnings elsewhere). Don't assume a failure is yours; compare against the pre-existing list before chasing it. `npm run build` does pass and is the reliable verification step.
+`npm run lint` passes (exit 0) but reports pre-existing warnings: `exhaustive-deps` in `Catalog`, `Pagination`, `UpdateMedia`, and `react-refresh/only-export-components` in the context files. `npm run build` is the reliable verification step.
 
 ## Environment
 

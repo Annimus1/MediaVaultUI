@@ -28,11 +28,11 @@ export default function Filters() {
 
   const handleSearch = () => {
     let text: string = ''
-    score && (text += `&score=${score * 2}`);
-    fromDate && (text += `&from=${fromDate}`);
-    toDate && (text += `&to=${toDate}`);
-    mediaType && (text += `&mediaType=${mediaType}`);
-    language && (text += `&language=${language}`);
+    if (score) text += `&score=${score * 2}`;
+    if (fromDate) text += `&from=${fromDate}`;
+    if (toDate) text += `&to=${toDate}`;
+    if (mediaType) text += `&mediaType=${mediaType}`;
+    if (language) text += `&language=${language}`;
     mediaContext?.setQueryString(text);
     mediaContext?.setCurrentAmount(1);
   }

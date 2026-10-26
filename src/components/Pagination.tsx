@@ -6,8 +6,9 @@ function Pagination() {
   const [buttons, setButtons]= useState<JSX.Element[]>([]);
 
   useEffect(()=> {
-    let newButtons = [];
-    for (let i = 0; i < mediaContext?.totalAmount!; i++) {
+    const newButtons: JSX.Element[] = [];
+    const totalAmount = mediaContext?.totalAmount ?? 0;
+    for (let i = 0; i < totalAmount; i++) {
       const isActive = mediaContext?.currentAmount === i + 1;
       const ariaLabel = (i + 1).toString();
       const className = `join-item btn btn-square ${isActive ? 'btn-active' : ''}`;

@@ -22,7 +22,7 @@ interface AuthContextType {
     isAuthenticated: boolean;
     login: (token: string) => void;
     updateToken: (token: string) => void;
-    logout: Function;
+    logout: () => void;
 }
 
 /**
@@ -47,16 +47,13 @@ interface AuthProviderProps {
  */
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [token, setToken] = React.useState<string | null>(localStorage.getItem('token'));
-    const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(!!token);
     const navigate = useNavigate();
 
     React.useEffect(() => {
         if (token) {
             localStorage.setItem('token', token);
-            setIsAuthenticated(true);
         } else {
             localStorage.removeItem('token');
-            setIsAuthenticated(false);
         }
     }, [token]); 
 
@@ -74,7 +71,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
      */
     const logout = React.useCallback(() => {
         setToken(null);
-        setIsAuthenticated(false);
         navigate('/login');
     }, [navigate]);
 

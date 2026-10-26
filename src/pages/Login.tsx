@@ -2,7 +2,6 @@ import axios from 'axios'
 import React from 'react'
 import { Link } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
-import.meta.env
 
 function Login() {
 

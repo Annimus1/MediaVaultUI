@@ -76,7 +76,7 @@ function Catalog() {
             setIsLoading(false);
           }
         }
-        catch (e) {
+        catch {
           setError('An unexpected error occurred. Please try again later.');
           setIsLoading(false);
         }
