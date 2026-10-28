@@ -40,13 +40,13 @@ function Login() {
         <div className="glass-card w-full rounded-2xl p-8 shadow-2xl text-slate-100">
 
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold tracking-tight text-white mb-2">Bienvenido de nuevo</h1>
-            <p className="text-sm text-slate-400">Ingresa tus credenciales para acceder a tu cuenta</p>
+            <h1 className="text-2xl font-bold tracking-tight text-white mb-2">Welcome back</h1>
+            <p className="text-sm text-slate-400">Enter your credentials to access your account</p>
           </div>
 
           <form className="space-y-5" onSubmit={e => { e.preventDefault(); login(); }}>
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2" htmlFor='user'>Email o Usuario</label>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2" htmlFor='user'>Email or Username</label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
@@ -60,15 +60,15 @@ function Login() {
                   value={user}
                   required
                   className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
-                  placeholder="nombre@ejemplo.com"
+                  placeholder="name@example.com"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-semibold uppercase tracking-wider text-slate-300" htmlFor='password'>Contraseña</label>
-                <a href="#" className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">¿Olvidaste tu contraseña?</a>
+                <label className="text-xs font-semibold uppercase tracking-wider text-slate-300" htmlFor='password'>Password</label>
+                <a href="#" className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">Forgot your password?</a>
               </div>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -89,7 +89,7 @@ function Login() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-200 transition-colors"
-                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
@@ -110,7 +110,7 @@ function Login() {
               disabled={!(user.length > 0) || !(password.length > 0) || loading}
               className="w-full mt-2 py-3 px-4 bg-indigo-600 hover:bg-indigo-500 active:scale-[0.99] text-white font-medium rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span>Iniciar Sesión</span>
+              <span>Sign In</span>
               {loading ? (
                 <span className="loading loading-dots loading-sm"></span>
               ) : (
@@ -122,7 +122,7 @@ function Login() {
           </form>
 
           <p className="text-center text-xs text-slate-400 mt-8">
-            ¿No tienes una cuenta? <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">Regístrate aquí</Link>
+            Don't have an account? <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">Register here</Link>
           </p>
 
         </div>
