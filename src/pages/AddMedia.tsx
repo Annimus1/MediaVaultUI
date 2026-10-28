@@ -4,12 +4,12 @@ import Navigation from "../components/Navigation";
 export default function AddMedia() {
   document.title = 'Media Vault - Add Media';
   return (
-    <div className="flex flex-col min-h-screen max-w-screen overflow-x-hidden">
+    <div className="flex min-h-screen flex-col bg-slate-950">
       <Navigation />
-      <div className='flex flex-col items-center  min-h-screen bg-base-100 p-4'>
+      <main className="flex flex-1 justify-center px-4 py-8 sm:px-6 lg:py-12">
         <AddMediaForm name="" score={0} poster="" language="spanish" mediaType="movie" comment=""
         completedDate={undefined} _id="" />
-      </div>
+      </main>
     </div>
   )
 }

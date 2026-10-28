@@ -57,15 +57,19 @@ export default function UpdateMedia() {
 
   document.title = 'Media Vault - Update Media';
   return (
-    <div className="flex flex-col min-h-screen max-w-screen overflow-x-hidden">
+    <div className="flex min-h-screen flex-col bg-slate-950">
       <Navigation />
-      <div className='flex flex-col items-center  min-h-screen bg-base-100 p-4'>
-        { display && 
+      <main className="flex flex-1 justify-center px-4 py-8 sm:px-6 lg:py-12">
+        {display ?
 
-        <AddMediaForm name={Props.name} comment={Props.comment} poster={Props.poster} _id={id} 
-        completedDate={new Date(Props.completedDate)} score={Props.score} mediaType={Props.mediaType} language={Props.language}/>
+          <AddMediaForm name={Props.name} comment={Props.comment} poster={Props.poster} _id={id}
+          completedDate={new Date(Props.completedDate)} score={Props.score} mediaType={Props.mediaType} language={Props.language}/>
+          :
+          <div className="flex items-center justify-center py-20">
+            <span className="loading loading-spinner loading-lg text-indigo-400"></span>
+          </div>
         }
-      </div>
+      </main>
     </div>
   )
 }
