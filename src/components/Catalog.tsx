@@ -76,7 +76,7 @@ function Catalog() {
             setIsLoading(false);
           }
         }
-        catch (e) {
+        catch {
           setError('An unexpected error occurred. Please try again later.');
           setIsLoading(false);
         }
@@ -84,7 +84,7 @@ function Catalog() {
   }, [mediaContext?.currentAmount, mediaContext?.queryString]);
 
   return (
-    <div className='max-w-full md:p-2 lg:p-4 xl:p-8 grid grid-cols-1 md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4 xl:gap-6'>
+    <div className='mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 px-4 py-4 sm:px-6 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:px-8 xl:grid-cols-4'>
       { // display loading skeletons
         isLoading && !error &&
         Array.from({ length: 10 }).map((_, index) => (
@@ -127,7 +127,7 @@ function Catalog() {
 
       { // add media button
         (media.length>0) && !error && !isLoading &&
-        <div className="w-96 flex flex-col items-center justify-center gap-4 p-4">
+        <div className="flex w-full max-w-xs flex-col items-center justify-center gap-4 p-4">
           <div className="flex flex-col items-center justify-center gap-2 p-4">
             <AddMediaBtn />
             <p className="text-2xl text-accent">Add new Media</p>

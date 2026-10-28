@@ -1,9 +1,9 @@
 import { type ReactNode } from 'react'
 
 type btnProps={
-   label: String,
+   label: string,
    icon: ReactNode,
-   action?: Function
+   action?: () => void
 }
 
 
