@@ -8,10 +8,10 @@ import Filters from '../components/Filters';
 function Home(): ReactNode {
   return (
     <MediaProvider>
-      <div className='max-w-dvw flex flex-col items-center justify-center gap-4 overflow-x-hidden'>
+      <div className='flex min-h-screen flex-col items-center gap-4 overflow-x-clip bg-slate-950'>
         <Navigation />
         <Filters />
-        <div className='min-h-[48rem]'>
+        <div className='min-h-[48rem] w-full'>
           <Catalog />
         </div>
         <footer className='w-full flex justify-center mb-5'>
