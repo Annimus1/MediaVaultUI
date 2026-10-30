@@ -109,3 +109,34 @@ export function writeRecommendationsCache(
   }
 }
 
+export function updateRecommendationsCache(
+  key: string,
+  data: Recommendation[]
+): void {
+  try {
+    const raw = localStorage.getItem(key);
+
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<StoredRecommendations>;
+
+      if (
+        Array.isArray(parsed.data) &&
+        typeof parsed.expiresAt === "number" &&
+        parsed.expiresAt > Date.now()
+      ) {
+        const stored: StoredRecommendations = {
+          data,
+          savedAt: typeof parsed.savedAt === "number" ? parsed.savedAt : Date.now(),
+          expiresAt: parsed.expiresAt,
+        };
+
+        localStorage.setItem(key, JSON.stringify(stored));
+        return;
+      }
+    }
+
+    writeRecommendationsCache(key, data);
+  } catch {
+    writeRecommendationsCache(key, data);
+  }
+}
