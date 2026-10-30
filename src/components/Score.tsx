@@ -12,11 +12,13 @@ import type { JSX } from "react";
 export default function Score({ id, score }: { id: string; score: number }): JSX.Element {
   // convert score from 0-10 to 0-5
   const fixedScore = score / 2;
-  
+
+  // Stars only support half increments, so round to the nearest half star.
+  const roundedScore = Math.round(fixedScore * 2) / 2;
+
   // Function to determine if a star should be checked based on the score
   const mightBeChecked = (starScore:number):boolean=>{
-    if(starScore === fixedScore ) return true;
-    return false;
+    return starScore === roundedScore;
   };
 
 
