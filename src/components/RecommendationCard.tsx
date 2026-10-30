@@ -1,4 +1,6 @@
+import { useCallback, useState } from "react";
 import type { Recommendation } from "../types/recommendation";
+import SeenRecommendationModal from "./SeenRecommendationModal";
 
 interface RecommendationCardProps {
   recommendation: Recommendation;
@@ -12,6 +14,9 @@ function matchBadgeClasses(matchPercentage: number): string {
 
 function RecommendationCard({ recommendation }: RecommendationCardProps) {
   const { name, mediaType, reason, matchPercentage, poster, isbn } = recommendation;
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   return (
     <article className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 transition-all duration-300 hover:border-slate-700 hover:shadow-lg hover:shadow-black/30">
@@ -49,7 +54,36 @@ function RecommendationCard({ recommendation }: RecommendationCardProps) {
             ISBN {isbn}
           </p>
         )}
+
+        <button
+          type="button"
+          onClick={() => setIsModalOpen(true)}
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-indigo-600/20 transition-all hover:bg-indigo-500 active:scale-[0.99] sm:text-sm"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="size-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m4.5 12.75 6 6 9-13.5"
+            />
+          </svg>
+          Mark as seen
+        </button>
       </div>
+
+      {isModalOpen && (
+        <SeenRecommendationModal
+          recommendation={recommendation}
+          onClose={closeModal}
+        />
+      )}
     </article>
   );
 }

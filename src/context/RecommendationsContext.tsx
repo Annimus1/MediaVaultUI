@@ -5,6 +5,7 @@ import type { Recommendation } from "../types/recommendation";
 import {
   getRecommendationsCacheKey,
   readRecommendationsCache,
+  updateRecommendationsCache,
   writeRecommendationsCache,
 } from "../lib/recommendationsCache";
 
@@ -14,6 +15,7 @@ interface RecommendationsContextType {
   error: string | null;
   noHistory: boolean;
   refresh: () => void;
+  removeRecommendation: (recommendation: Recommendation) => void;
 }
 
 interface RecommendationsProviderProps {
@@ -51,6 +53,23 @@ export const RecommendationsProvider: React.FC<RecommendationsProviderProps> = (
   const refresh = React.useCallback(() => {
     setReloadKey((key) => key + 1);
   }, []);
+
+  const removeRecommendation = React.useCallback(
+    (target: Recommendation) => {
+      const next = recommendations.filter(
+        (recommendation) =>
+          recommendation.name !== target.name ||
+          recommendation.mediaType !== target.mediaType
+      );
+
+      setRecommendations(next);
+
+      if (token) {
+        updateRecommendationsCache(getRecommendationsCacheKey(token), next);
+      }
+    },
+    [recommendations, token]
+  );
 
   React.useEffect(() => {
     if (!token) {
@@ -135,6 +154,7 @@ export const RecommendationsProvider: React.FC<RecommendationsProviderProps> = (
     error,
     noHistory,
     refresh,
+    removeRecommendation,
   };
 
   return (

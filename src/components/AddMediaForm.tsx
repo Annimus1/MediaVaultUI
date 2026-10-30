@@ -177,7 +177,9 @@ export default function AddMediaForm(props: AddMediaFormProps) {
   const [error, setError] = React.useState<string | null>(null);
   const [name, setName] = React.useState<string>(props.name);
   const [completedDate, setCompletedDate] = React.useState<Date | undefined>(props.completedDate);
-  const [score, setScore] = React.useState<number>(props.score);
+  const [score, setScore] = React.useState<number>(
+    Number.isInteger(props.score) ? props.score : Math.round(props.score)
+  );
   const [poster, setPoster] = React.useState<string>(props.poster);
   const [mediaType, setMediaType] = React.useState<string>(props.mediaType || "movie");
   const [language, setLanguage] = React.useState<string>(props.language || "spanish");
@@ -224,8 +226,13 @@ export default function AddMediaForm(props: AddMediaFormProps) {
       return;
     }
 
+    if (!Number.isInteger(score)) {
+      showError("Score must be a whole number between 0 and 10.");
+      return;
+    }
+
     if (score < 0 || score > 10) {
-      showError("Score must be between 0 and 10.");
+      showError("Score must be a whole number between 0 and 10.");
       return;
     }
 
@@ -322,7 +329,7 @@ export default function AddMediaForm(props: AddMediaFormProps) {
               required
               min={0}
               max={10}
-              step={0.5}
+              step={1}
               value={score}
               onChange={(e) => setScore(Number(e.target.value))}
               className={`${CONTROL_CLASSES} pl-9`}
