@@ -1,5 +1,6 @@
 import Catalog from '../components/Catalog';
 import Navigation from '../components/Navigation';
+import RecommendationCarousel from '../components/RecommendationCarousel';
 import type { ReactNode } from 'react';
 import Pagination from '../components/Pagination';
 import { MediaProvider } from '../context/MediaContext';
@@ -10,6 +11,7 @@ function Home(): ReactNode {
     <MediaProvider>
       <div className='flex min-h-screen flex-col items-center gap-4 overflow-x-clip bg-slate-950'>
         <Navigation />
+        <RecommendationCarousel />
         <Filters />
         <div className='min-h-[48rem] w-full'>
           <Catalog />

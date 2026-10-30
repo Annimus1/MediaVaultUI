@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoutes";
 import PageNotFound from "../pages/404";
 import AddMedia from "../pages/AddMedia";
 import UpdateMedia from "../pages/UpdateMedia";
+import Recommendations from "../pages/Recommendations";
 
 const routes = createBrowserRouter([{
   path: "/",
@@ -15,6 +16,7 @@ const routes = createBrowserRouter([{
         children:[
           {path: "/", index:true, element: <ProtectedRoute><Home/></ProtectedRoute>},
           {path: "/add", element: <ProtectedRoute><AddMedia/></ProtectedRoute>},
+          {path: "/recommendations", element: <ProtectedRoute><Recommendations/></ProtectedRoute>},
           {path: "/login", element: <Login />},
           {path: "/register", element: <Register />},
           {path: "/:id/update", element: <UpdateMedia />}
