@@ -38,7 +38,7 @@ function Catalog() {
     document.title = 'Media Vault - Home';
     setIsLoading(true);
 
-    axios.get<fetchTypes>(import.meta.env.VITE_URL + '/?page=' + mediaContext?.currentAmount + mediaContext?.queryString, {
+    axios.get<fetchTypes>(import.meta.env.VITE_URL + '?page=' + mediaContext?.currentAmount + mediaContext?.queryString, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authContext?.token}`
